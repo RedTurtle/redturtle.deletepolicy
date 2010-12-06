@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0 (2010-12-06)
+------------------
+
+* project moved to the `collective`__ [keul]
+
+__ http://dev.plone.org/collective
+
 1.0.5 (2010-07-17)
 ------------------
 
@@ -30,7 +37,7 @@ Changelog
 * Added policy for cut menu voice, like the delete ones you can cut only if you can modify.
 
 1.0.0 - Unreleased
-----------------
+------------------
 
 * Initial release
 

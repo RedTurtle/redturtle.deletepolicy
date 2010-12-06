@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0.5'
+version = '1.1.0'
 
 setup(name='redturtle.deletepolicy',
       version=version,
@@ -14,10 +14,10 @@ setup(name='redturtle.deletepolicy',
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='delete policy permissions',
+      keywords='delete policy permissions security',
       author='RedTurtle Technology',
-      author_email='info@redturtle.net',
-      url='https://code.redturtle.it/svn/redturtle/redturtle.deletepolicy/',
+      author_email='sviluppoplone@redturtle.net',
+      url='http://plone.org/products/redturtle.deletepolicy',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['redturtle'],
