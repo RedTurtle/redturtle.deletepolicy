@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+
+ <object name="redturtle.deletepolicy" meta_type="Filesystem Directory View"
+    directory="redturtle.deletepolicy:skins/redturtle.deletepolicy"/>
+
+ <skin-path name="*">
+  <layer name="redturtle.deletepolicy" insert-after="custom" />
+ </skin-path>
+
+</object>
