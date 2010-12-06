@@ -1,0 +1,36 @@
+Changelog
+=========
+
+1.0.5 (2010-07-17)
+------------------
+
+* added z3c.autoinclude [keul] 
+
+1.0.4 (2010-06-03)
+------------------
+
+* customized the script of cut from folder_contents. Now performs the check that the user can 
+  modify the objects who wants to cut. 
+  [mirco]
+
+1.0.3 (2010-04-15)
+------------------
+
+* Release on RedTurtle pypi
+
+1.0.2
+-----
+
+* Cleaned the egg format
+
+1.0.1
+-----
+
+* Bug fixed: the delete object menu voice was always available.
+* Added policy for cut menu voice, like the delete ones you can cut only if you can modify.
+
+1.0.0 - Unreleased
+----------------
+
+* Initial release
+
