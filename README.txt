@@ -30,7 +30,7 @@ this will run with the default Plone permissions (so, only checking the "*Delete
 Requirements
 ============
 
-This product has been tested and used on Plone 4. 
+This product has been tested and used on Plone. 
 
 Authors
 =======
