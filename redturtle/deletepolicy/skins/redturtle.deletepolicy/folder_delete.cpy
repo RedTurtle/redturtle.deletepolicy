@@ -48,8 +48,36 @@ if success:
     message = _(u'Item(s) deleted.')
 
 if failure:
-    message = _(u'${items} could not be deleted.',
-                mapping={u'items' : ', '.join(failure.keys())})
+    # we want a more descriptive message when trying
+    # to delete locked item
+    from Products.CMFDefault.exceptions import ResourceLockedError
+    other = []
+    locked = []
+    message = str(failure)
+    for key, value in failure.items():
+        # below is a clever way to check exception type
+        try:
+                raise value
+        except ResourceLockedError:
+                locked.append(key)
+        except:
+                other.append(key)
+        else:
+                other.append(key)
+    # locked contains ids of items that cannot be deleted,
+    # because they are locked; other contains ids of items
+    # that cannot be deleted for other reasons;
+    # now we need to construct smarter error message
+    msgs = []
+    mapping = {}
+
+    if locked:
+        mapping[u'lockeditems'] = ', '.join(locked)
+        message = _(u'These items are locked for editing: ${lockeditems}.', mapping=mapping)
+    else:
+        mapping[u'items'] = ', '.join(other)
+        message = _(u'${items} could not be deleted.', mapping=mapping)
+
 
 context.plone_utils.addPortalMessage(message)
 return state.set(status=status)

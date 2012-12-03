@@ -16,7 +16,7 @@ from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
 
 REQUEST=context.REQUEST
-if REQUEST.has_key('paths'):
+if 'paths' in REQUEST:
     
     member = getToolByName(context, 'portal_membership').getAuthenticatedMember()
     paths = REQUEST['paths']

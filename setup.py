@@ -5,12 +5,13 @@ version = '1.1.0'
 
 setup(name='redturtle.deletepolicy',
       version=version,
-      description="Modified policy for deleting objects in Plone 3",
+      description="Modified policy for deleting objects in Plone 4",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: 4.1",
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
