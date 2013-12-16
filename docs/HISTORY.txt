@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1.1 (unreleased)
+2.1.1 (2013-12-16)
 ------------------
 
 - Do not handle ``manage_pasteObjects`` anymore. It is a good fix for
