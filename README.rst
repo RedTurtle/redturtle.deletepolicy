@@ -24,20 +24,24 @@ For deleting a content you must have:
 Security
 --------
 
-This product is targeted on Plone UI. If you run a task, a 3rd party product or whatever piece of code that delete objects,
-this will run with the default Plone permissions (so, only checking the "*Delete objects*" on containers.
+This product is mainly targeted on Plone UI and it monkeypatch the low level permission for cutting documents.
 
-Requirements
-============
+If you run a task, a 3rd party product or whatever piece of code that delete objects,
+this will run with the default Plone permissions (so, only checking the "*Delete objects*" on containers).
 
-This product has been tested and used on Plone. 
+Alternatives
+------------
+
+A very similar product (probably better maintained): `collective.deletepermission`__
+
+__ https://pypi.python.org/pypi/collective.deletepermission
 
 Authors
 =======
 
 This product was developed by RedTurtle Technology team.
 
-.. image:: http://www.redturtle.net/redturtle_banner.png
+.. image:: http://www.redturtle.it/redturtle_banner.png
    :alt: RedTurtle Technology Site
-   :target: http://www.redturtle.net/
+   :target: http://www.redturtle.it/
 

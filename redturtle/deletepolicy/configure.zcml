@@ -8,7 +8,7 @@
       name="default"
       title="redturtle.deletepolicy"
       directory="profiles/default"
-      description="Extension profile for redturtle.deletepolicy"
+      description="New delete policy"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 

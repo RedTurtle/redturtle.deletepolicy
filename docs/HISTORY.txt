@@ -4,17 +4,17 @@ Changelog
 2.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Do not handle ``manage_pasteObjects`` anymore. It is a good fix for
+  Plone, but this was the wrong product (we only care about *deletion* here)
+  [keul]
 
-
-2.1.0 (2012-12-03)
+2.1.0 (Unreleased)
 ------------------
 
 - Fixed low level Archetypes permissions for ``manage_cutObjects``
   and ``manage_pasteObjects`` [fdelia] 
 
-
-2.0.0 (2012-12-03)
+2.0.0 (Unreleased)
 ------------------
 
 * Plone 4.1 compatibility [fdelia]
