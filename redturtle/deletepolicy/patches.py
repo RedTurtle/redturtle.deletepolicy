@@ -7,7 +7,11 @@ from Globals import InitializeClass
 from Products.CMFCore import permissions
 from Products.CMFPlone.PloneFolder import BasePloneFolder
 from Products.Archetypes.BaseFolder import BaseFolderMixin
-from Products.Archetypes.BaseBTreeFolder import BaseBTreeFolder
+try:
+    from Products.Archetypes.BaseBTreeFolder import BaseBTreeFolder
+except ImportError:
+    # Strange Plone 4 compatibiliy, only for running tests
+    BaseBTreeFolder = None
 from Products.CMFPlone.Portal import PloneSite
 from AccessControl.Permissions import delete_objects, copy_or_move, view_management_screens
 
@@ -27,7 +31,8 @@ def _update_permissionsCut(_class):
     
 _update_permissionsCut(BasePloneFolder)
 _update_permissionsCut(BaseFolderMixin)
-_update_permissionsCut(BaseBTreeFolder)
+if BaseBTreeFolder:
+    _update_permissionsCut(BaseBTreeFolder)
 logger.warning("*** Monkeypatched default permission for cut objects (from ModifyPortalContent to DeleteObject) ***")
 
 
