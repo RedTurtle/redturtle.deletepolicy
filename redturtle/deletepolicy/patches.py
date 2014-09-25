@@ -7,6 +7,7 @@ from Globals import InitializeClass
 from Products.CMFCore import permissions
 from Products.CMFPlone.PloneFolder import BasePloneFolder
 from Products.Archetypes.BaseFolder import BaseFolderMixin
+from Products.Archetypes import atapi
 try:
     from Products.Archetypes.BaseBTreeFolder import BaseBTreeFolder
 except ImportError:
