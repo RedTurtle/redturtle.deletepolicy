@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-import config
-import patches
+from redturtle.deletepolicy import config  # noqa
+from redturtle.deletepolicy import patches  # noqa
