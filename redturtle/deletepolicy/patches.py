@@ -1,56 +1,53 @@
-# Monkey patch for default manage_cutObjects behaviour. 
-# We don't want to have ModifyPortalContent permission to be allow to manage_cutObjects.
-# So now we are using 'Delete objects'
+"""
+  For deleting a content you must have:
 
-import logging
-from Globals import InitializeClass
-from Products.CMFCore import permissions
-from Products.CMFPlone.PloneFolder import BasePloneFolder
-from Products.Archetypes.BaseFolder import BaseFolderMixin
-from Products.Archetypes import atapi
-try:
-    from Products.Archetypes.BaseBTreeFolder import BaseBTreeFolder
-except ImportError:
-    # Strange Plone 4 compatibiliy, only for running tests
-    BaseBTreeFolder = None
-from Products.CMFPlone.Portal import PloneSite
-from AccessControl.Permissions import delete_objects, copy_or_move, view_management_screens
+    "Delete objects" permission on the parent folder
+    "Delete objects" permission on the content itself
+    Beeing able to modify the content (all the contents) you want to delete
 
-logger = logging.getLogger("redturtle.deletepolicy")
+  Code inspired by collective.deletepermission
+
+"""
 
 
-def _update_permissionsCut(_class):
-    old_permissions = dict(_class.__ac_permissions__).copy()
-    try:
-        mpc = list(old_permissions[permissions.ModifyPortalContent])
-        mpc.remove('manage_cutObjects')
-        old_permissions[permissions.ModifyPortalContent] = tuple(mpc)
-    except KeyError:
-        pass
-    _class.__ac_permissions__ = ((delete_objects, ('manage_cutObjects',)),) + tuple(old_permissions.items())
-    InitializeClass(_class)
-    
-_update_permissionsCut(BasePloneFolder)
-_update_permissionsCut(BaseFolderMixin)
-if BaseBTreeFolder:
-    _update_permissionsCut(BaseBTreeFolder)
-logger.warning("*** Monkeypatched default permission for cut objects (from ModifyPortalContent to DeleteObject) ***")
+from AccessControl import Unauthorized
+from AccessControl import getSecurityManager
+from AccessControl.Permissions import delete_objects
+from AccessControl.Permissions import copy_or_move
+from AccessControl.PermissionRole import PermissionRole
+
+from plone.dexterity.content import Container
+
+def protect_del_objects(self, ids=None):
+    #import pdb; pdb.set_trace()
+    sm = getSecurityManager()
+    if not sm.checkPermission('Delete objects', self):      # delete_objects
+        raise Unauthorized(
+            "Do not have permissions to remove this object")
+
+    if ids is None:
+        ids = []
+    if isinstance(ids, str):
+        ids = [ids]
+    for id_ in ids:
+        item = self._getOb(id_)
+        if not sm.checkPermission("Delete objects", item) or \
+           not sm.checkPermission("Modify portal content", item):
+            raise Unauthorized(
+                "Do not have permissions to remove this object")
+
+def manage_delObjects(self, ids=None, REQUEST=None):
+    """We need to enforce security."""
+    protect_del_objects(self, ids)
+    return super(Container, self).manage_delObjects(ids, REQUEST=REQUEST)
+
+# Patch manage_cutObjects and manage_pasteObjects security
+# By default Dexterity Container sets the permission of manage_cutObjects and
+# manage_pasteObjects to ModifyPortalContent
+#  https://github.com/plone/plone.dexterity/blob/master/plone/dexterity/content.py
+def apply_delete_objects_permission_role(klass, name, replacement):
+    setattr(klass, name, PermissionRole('Delete objects', None))
 
 
-#def _update_permissionsPaste(_class):
-#    old_permissions = dict(_class.__ac_permissions__).copy()
-#    try:
-#        mpc = list(old_permissions[permissions.ModifyPortalContent])
-#        mpc.remove('manage_pasteObjects')
-#        old_permissions[permissions.ModifyPortalContent] = tuple(mpc)
-#    except KeyError:
-#        pass
-#    _class.__ac_permissions__ = ((permissions.AddPortalContent, ('manage_pasteObjects',)),) + tuple(old_permissions.items())
-#    InitializeClass(_class)
-#    
-#_update_permissionsPaste(BasePloneFolder)
-#_update_permissionsPaste(BaseFolderMixin)
-#_update_permissionsPaste(BaseBTreeFolder)
-#_update_permissionsPaste(PloneSite)
-#logger.warning("*** Monkeypatched default permission for paste objects (from ModifyPortalContent to AddPortalContent) ***")
-
+def dummy_replacement():
+    pass

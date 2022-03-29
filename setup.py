@@ -14,7 +14,9 @@ setup(name='redturtle.deletepolicy',
         "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.2",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='delete policy permissions security',
@@ -28,7 +30,7 @@ setup(name='redturtle.deletepolicy',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+          'collective.monkeypatcher',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
