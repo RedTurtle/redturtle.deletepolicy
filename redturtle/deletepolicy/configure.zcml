@@ -1,7 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:monkey="http://namespaces.plone.org/monkey"
     i18n_domain="redturtle.deletepolicy">
 
   <genericsetup:registerProfile
@@ -12,4 +13,37 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <include package="collective.monkeypatcher" />
+
+  <configure
+    zcml:condition="installed plone.app.dexterity">
+      <monkey:patch
+          description="Patch dexterity's manage_delObjects"
+          class="plone.dexterity.content.Container"
+          original="manage_delObjects"
+          replacement="redturtle.deletepolicy.patches.manage_delObjects"
+          />
+  </configure>
+
+  <configure 
+    zcml:condition="installed plone.app.dexterity">
+      <monkey:patch
+          description="Dexterity: patch manage_cutObjects protection role."
+          class="plone.dexterity.content.Container"
+          original="manage_cutObjects__roles__"
+          replacement="redturtle.deletepolicy.patches.dummy_replacement"
+          handler="redturtle.deletepolicy.patches.apply_delete_objects_permission_role"
+          />
+  </configure>
+
+  <configure 
+    zcml:condition="installed plone.app.dexterity">
+      <monkey:patch
+          description="Dexterity: patch manage_pasteObjects protection role."
+          class="plone.dexterity.content.Container"
+          original="manage_pasteObjects__roles__"
+          replacement="redturtle.deletepolicy.patches.dummy_replacement"
+          handler="redturtle.deletepolicy.patches.apply_delete_objects_permission_role"
+          />
+  </configure>
 </configure>
