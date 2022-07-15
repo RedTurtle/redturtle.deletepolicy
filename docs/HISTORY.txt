@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.2.1 (unreleased)
+3.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- major refactoring for pytho3 and plone 5.2, added some new tests.
+  [reflab] 
 
 
 2.2.0 (2020-03-06)
